@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>SampSharp.UI</id>
+    <title>SampSharp.UI</title>
+    <authors>Tim Potze, Contributors</authors>
+    <owners>Tim Potze</owners>
+    <licenseUrl>https://raw.githubusercontent.com/ikkentim/sampsharp-ui/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/ikkentim/sampsharp-ui</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>UI framework for SampSharp</description>
+    <copyright>Copyright Tim Potze, Contributors 2016</copyright>
+    <tags></tags>
+  </metadata>
+  <files>
+    <file src="SampSharp.UI.dll" target="lib/net45" />
+    <file src="SampSharp.UI.xml" target="lib/net45" />
+  </files>
+</package>
