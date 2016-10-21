@@ -1,7 +1,4 @@
-Streamer wrapper for SampSharp
+UI package for sampsharp
 =====================
 
-[![AppVeyor](https://img.shields.io/appveyor/ci/ikkentim/sampsharp-streamer.svg)](https://ci.appveyor.com/project/ikkentim/sampsharp-streamer/)
-
-A wrapper of the popular SA-MP streamer plugin for SampSharp.
-
+Work in progress
