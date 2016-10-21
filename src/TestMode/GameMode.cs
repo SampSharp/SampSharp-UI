@@ -16,32 +16,15 @@
 using System;
 using System.Diagnostics;
 using SampSharp.GameMode;
-using SampSharp.GameMode.API;
-using SampSharp.GameMode.Definitions;
-using SampSharp.GameMode.Display;
 using SampSharp.GameMode.Events;
 using SampSharp.GameMode.SAMP;
 using SampSharp.GameMode.SAMP.Commands;
 using SampSharp.GameMode.World;
-using SampSharp.UI;
-using SampSharp.UI.Utilities;
 
 namespace TestMode
 {
     public class GameMode : BaseMode
     {
-        public class ClientMessageTraceListener : TraceListener
-        {
-            public override void Write(string message)
-            {
-                BasePlayer.SendClientMessageToAll(Color.Gray, $"[DEBUG] {message}");
-            }
-
-            public override void WriteLine(string message)
-            {
-                Write(message);
-            }
-        }
         protected override void OnInitialized(EventArgs e)
         {
             Server.ToggleDebugOutput(true);
@@ -50,7 +33,7 @@ namespace TestMode
             PlayerConnected += OnPlayerConnected;
 
             base.OnInitialized(e);
-            
+
             Process.Start(@"D:\games\Rockstar Games\GTA sa\samp.exe", "127.0.0.1:8192");
         }
 
@@ -85,30 +68,22 @@ namespace TestMode
 //            _textDraw.Show();
 //            (sender as BasePlayer).SelectTextDraw(Color.Red);
 
-                        var form = new TestForm(sender as BasePlayer);
-                        
-                        form.Show();
+            var form = new TestForm(sender as BasePlayer);
 
-
-            //            var t = new Timer(1000, true, true);
-            //            t.Tick += (o, args) =>
-            //            {
-            //                if (form.Visible) form.Hide();else form.Show();
-            //            };
-            //            ((BasePlayer) sender).Disconnected += (o, args) => t.IsRunning = false;
+            form.Show();
         }
-
-        protected override void OnRconCommand(RconEventArgs e)
+        
+        public class ClientMessageTraceListener : TraceListener
         {
-            Console.WriteLine("COMMAND: " + e.Command);
-            base.OnRconCommand(e);
-        }
+            public override void Write(string message)
+            {
+                BasePlayer.SendClientMessageToAll(Color.Gray, $"[DEBUG] {message}");
+            }
 
-        [Command("test")]
-        public static void cmd(BasePlayer player)
-        {
-            player.SendClientMessage("TEST!");
-//            Form.Show<LoginForm>(player);
+            public override void WriteLine(string message)
+            {
+                Write(message);
+            }
         }
     }
 }

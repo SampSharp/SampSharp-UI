@@ -34,8 +34,6 @@ namespace SampSharp.UI
         
         private void InitializeComponent()
         {
-            TextDraw.Selectable = true;//todo
-
             Shadow = 0;
             LetterSize = new Vector2(0.18f, 0.9f);
             BackColor = 0x00000001;
@@ -173,17 +171,7 @@ namespace SampSharp.UI
         {
             _properties.Set(MakeFitting(_text), "Text");
         }
-
-        #region Overrides of Control
-
-        protected override void OnClick(ControlClickEventArgs args)
-        {
-            Proportional = !Proportional;
-            base.OnClick(args);
-        }
-
-        #endregion
-
+        
         #region Overrides of Control
 
         protected override void OnSizeChanged()

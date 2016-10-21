@@ -26,7 +26,7 @@ namespace TestMode
         private void InitializeComponent()
         {
             Position = new Vector2(100, 150);
-            Interactable = true;
+            Interactable = false;
 
 //            panel = new Panel();
 //            panel.Size = new Vector2(150, 50);

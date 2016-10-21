@@ -28,29 +28,30 @@ namespace SampSharp.UI
     {
         private readonly BatchedPropertyCollection<PlayerTextDraw> _properties = new BatchedPropertyCollection<PlayerTextDraw>
         {
-            ["Alignment"] = new BatchedProperty<PlayerTextDraw,TextDrawAlignment>((t, v) => t.Alignment = v),
-            ["BackColor"] = new BatchedProperty<PlayerTextDraw,Color>((t, v) => t.BackColor = v),
-            ["BoxColor"] = new BatchedProperty<PlayerTextDraw,Color>((t, v) => t.BoxColor = v),
-            ["Font"] = new BatchedProperty<PlayerTextDraw,TextDrawFont>((t, v) => t.Font = v),
-            ["ForeColor"] = new BatchedProperty<PlayerTextDraw,Color>((t, v) => t.ForeColor = v),
-            ["LetterSize"] = new BatchedProperty<PlayerTextDraw, Vector2>((t, v) => t.LetterSize = v),
-            ["Outline"] = new BatchedProperty<PlayerTextDraw, int>((t, v) => t.Outline = v),
-            ["Position"] = new BatchedProperty<PlayerTextDraw, Vector2>((t, v) => t.Position = v),
-            ["PreviewModel"] = new BatchedProperty<PlayerTextDraw, int>((t, v) => t.PreviewModel = v),
-            ["PreviewPrimaryColor"] = new BatchedProperty<PlayerTextDraw, int>((t, v) => t.PreviewPrimaryColor = v),
-            ["PreviewSecondaryColor"] = new BatchedProperty<PlayerTextDraw, int>((t, v) => t.PreviewSecondaryColor = v),
-            ["PreviewRotation"] = new BatchedProperty<PlayerTextDraw, Vector3>((t, v) => t.PreviewRotation = v),
-            ["PreviewZoom"] = new BatchedProperty<PlayerTextDraw, float>((t, v) => t.PreviewZoom = v),
-            ["Proportional"] = new BatchedProperty<PlayerTextDraw, bool>((t, v) => t.Proportional = v),
-            ["Selectable"] = new BatchedProperty<PlayerTextDraw, bool>((t, v) => t.Selectable = v),
-            ["Shadow"] = new BatchedProperty<PlayerTextDraw, int>((t, v) => t.Shadow = v),
-            ["Text"] = new BatchedProperty<PlayerTextDraw, string>((t, v) => t.Text = v.Replace("\n", "~n~")),
-            ["UseBox"] = new BatchedProperty<PlayerTextDraw, bool>((t, v) => t.UseBox = v),
+            // TODO some  default values are incorrect, need to find correct values
+            ["Alignment"] = new BatchedProperty<PlayerTextDraw,TextDrawAlignment>((t, v) => t.Alignment = v, TextDrawAlignment.Left),
+            ["BackColor"] = new BatchedProperty<PlayerTextDraw,Color>((t, v) => t.BackColor = v,  Color.Black),// TODO
+            ["BoxColor"] = new BatchedProperty<PlayerTextDraw,Color>((t, v) => t.BoxColor = v, Color.Black),// TODO
+            ["Font"] = new BatchedProperty<PlayerTextDraw,TextDrawFont>((t, v) => t.Font = v, TextDrawFont.Normal),
+            ["ForeColor"] = new BatchedProperty<PlayerTextDraw,Color>((t, v) => t.ForeColor = v, Color.White),// TODO
+            ["LetterSize"] = new BatchedProperty<PlayerTextDraw, Vector2>((t, v) => t.LetterSize = v, Vector2.One),// TODO
+            ["Outline"] = new BatchedProperty<PlayerTextDraw, int>((t, v) => t.Outline = v, 1),// TODO
+            ["Position"] = new BatchedProperty<PlayerTextDraw, Vector2>((t, v) => t.Position = v, Vector2.Zero),
+            ["PreviewModel"] = new BatchedProperty<PlayerTextDraw, int>((t, v) => t.PreviewModel = v, 0),// TODO
+            ["PreviewPrimaryColor"] = new BatchedProperty<PlayerTextDraw, int>((t, v) => t.PreviewPrimaryColor = v, -1),
+            ["PreviewSecondaryColor"] = new BatchedProperty<PlayerTextDraw, int>((t, v) => t.PreviewSecondaryColor = v, -1),
+            ["PreviewRotation"] = new BatchedProperty<PlayerTextDraw, Vector3>((t, v) => t.PreviewRotation = v, Vector3.Zero),// TODO
+            ["PreviewZoom"] = new BatchedProperty<PlayerTextDraw, float>((t, v) => t.PreviewZoom = v, 0),// TODO
+            ["Proportional"] = new BatchedProperty<PlayerTextDraw, bool>((t, v) => t.Proportional = v, true),
+            ["Selectable"] = new BatchedProperty<PlayerTextDraw, bool>((t, v) => t.Selectable = v, false),
+            ["Shadow"] = new BatchedProperty<PlayerTextDraw, int>((t, v) => t.Shadow = v, 1),// TODO
+            ["Text"] = new BatchedProperty<PlayerTextDraw, string>((t, v) => t.Text = v.Replace("\n", "~n~"), "_"),
+            ["UseBox"] = new BatchedProperty<PlayerTextDraw, bool>((t, v) => t.UseBox = v, false),
             ["TextSize"] = new BatchedProperty<PlayerTextDraw, Vector2>((t, v) =>
             {
                 t.Width = v.X;
                 t.Height = v.Y;
-            }),
+            }, Vector2.Zero),
         };
         
         private PlayerTextDraw _textDraw;
