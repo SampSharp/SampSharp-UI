@@ -43,6 +43,8 @@ namespace TestMode
             textArea = new TextArea();
             textArea.Position = new Vector2(20, 20);
             textArea.Size = new Vector2(150, 60);
+            textArea.Font=TextDrawFont.Normal
+            ;
             textArea.Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quamquam id quidem licebit iis existimare, qui legerint.";
             //            panel.Controls.Add(label);
             //            panel.Controls.Add(button);

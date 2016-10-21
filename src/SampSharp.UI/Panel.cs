@@ -16,6 +16,7 @@
 using SampSharp.GameMode;
 using SampSharp.GameMode.Definitions;
 using SampSharp.GameMode.SAMP;
+using SampSharp.UI.Utilities;
 
 namespace SampSharp.UI
 {

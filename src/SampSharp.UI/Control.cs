@@ -36,6 +36,9 @@ namespace SampSharp.UI
         private Vector2 _size;
         private bool _visible = true;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Control"/> class.
+        /// </summary>
         protected Control()
         {
             _reportedIsVisible = Visible;

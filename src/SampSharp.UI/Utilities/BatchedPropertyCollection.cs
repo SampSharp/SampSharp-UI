@@ -17,9 +17,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using SampSharp.GameMode.Display;
 
-namespace SampSharp.UI
+namespace SampSharp.UI.Utilities
 {
     public class BatchedPropertyCollection<TContainer>
     {
@@ -56,7 +55,7 @@ namespace SampSharp.UI
             if (name == null) throw new ArgumentNullException(nameof(name));
             if (this[name].Set(value))
             {
-                Debug.WriteLine($"Setting {name} to {value}");
+//                Debug.WriteLine($"Setting {name} to {value}");
                 return true;
             }
             return false;

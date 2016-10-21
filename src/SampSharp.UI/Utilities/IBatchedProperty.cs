@@ -1,6 +1,4 @@
-﻿using SampSharp.GameMode.Display;
-
-namespace SampSharp.UI
+﻿namespace SampSharp.UI.Utilities
 {
     public interface IBatchedProperty<T>
     {

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SampSharp.GameMode;
 using SampSharp.GameMode.Definitions;
 using SampSharp.GameMode.SAMP;
+using SampSharp.UI.Utilities;
 
 namespace SampSharp.UI
 {
@@ -20,7 +22,7 @@ namespace SampSharp.UI
             ["ForeColor"] = new BatchedProperty<Label, Color>((t, v) => t.ForeColor = v),
             ["LetterSize"] = new BatchedProperty<Label, Vector2>((t, v) => t.LetterSize = v),
             ["Outline"] = new BatchedProperty<Label, int>((t, v) => t.Outline = v),
-            ["Proportional"] = new BatchedProperty<Label, bool>((t, v) => t.Proportional = v),
+            ["Proportional"] = new BatchedProperty<Label, bool>((t, v) => t.Proportional = v, true),
             ["Shadow"] = new BatchedProperty<Label, int>((t, v) => t.Shadow = v),
             ["Text"] = new BatchedProperty<Label, string>((t, v) => t.Text = v),
         };
@@ -32,6 +34,8 @@ namespace SampSharp.UI
         
         private void InitializeComponent()
         {
+            TextDraw.Selectable = true;//todo
+
             Shadow = 0;
             LetterSize = new Vector2(0.18f, 0.9f);
             BackColor = 0x00000001;
@@ -42,45 +46,7 @@ namespace SampSharp.UI
             
             _properties.SetContainer(_label);
         }
-
-        private Vector2 GetTextSize(string value)
-        {
-            return ControlUtils.GetTextSize(value, Font, LetterSize, Proportional);
-        }
-
-        private int GetStringWithMaxWidth(string value, float width)
-        {
-            if (value == null) throw new ArgumentNullException(nameof(value));
-
-            var len = 1;
-            while (value.Length > len)
-            {
-                var cur = GetTextSize(value.Substring(0, len + 1)).X;
-                if (cur > width)
-                    return len;
-
-                len++;
-            }
-
-            return value.Length;
-        }
-
-        private string MakeFitting(string value)
-        {
-            var lines = new List<string>();
-
-            while (!string.IsNullOrWhiteSpace(value))
-            {
-                var line = GetStringWithMaxWidth(value, Width);
-
-                lines.Add(value.Substring(0, line));
-
-                value = value.Length > line ? value.Substring(line) : null;
-            }
-
-            return string.Join("\n", lines);
-        }
-
+        
         #region Implementation of ITextControl
 
         public Color ForeColor
@@ -108,6 +74,7 @@ namespace SampSharp.UI
                 if (_properties.Set(value))
                 {
                     OnPropertyChanged();
+                    CheckTextSize();
                     Invalidate();
                 }
             }
@@ -138,6 +105,7 @@ namespace SampSharp.UI
                 if (_properties.Set(value))
                 {
                     OnPropertyChanged();
+                    CheckTextSize();
                     Invalidate();
                 }
             }
@@ -153,6 +121,7 @@ namespace SampSharp.UI
                 if (_properties.Set(value))
                 {
                     OnPropertyChanged();
+                    CheckTextSize();
                     Invalidate();
                 }
             }
@@ -195,13 +164,33 @@ namespace SampSharp.UI
 
         #endregion
 
+        private string MakeFitting(string value)
+        {
+            return ControlUtils.FitTextInWidth(value, Font, LetterSize, Proportional, Size.X);
+        }
+
+        private void CheckTextSize()
+        {
+            _properties.Set(MakeFitting(_text), "Text");
+        }
+
+        #region Overrides of Control
+
+        protected override void OnClick(ControlClickEventArgs args)
+        {
+            Proportional = !Proportional;
+            base.OnClick(args);
+        }
+
+        #endregion
+
         #region Overrides of Control
 
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();
 
-            _properties.Set(MakeFitting(_text), "Text");
+            CheckTextSize();
         }
 
         #endregion

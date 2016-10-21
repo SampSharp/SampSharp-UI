@@ -14,10 +14,8 @@
 // limitations under the License.
 
 using System;
-using System.Diagnostics;
-using SampSharp.GameMode.Display;
 
-namespace SampSharp.UI
+namespace SampSharp.UI.Utilities
 {
     public class BatchedProperty<TContainer,TValue> : IBatchedProperty<TContainer>
     {
@@ -31,6 +29,11 @@ namespace SampSharp.UI
         {
             if (apply == null) throw new ArgumentNullException(nameof(apply));
             _apply = apply;
+        }
+
+        public BatchedProperty(Action<TContainer, TValue> apply, TValue defaultValue) : this(apply)
+        {
+            _value = defaultValue;
         }
 
         object IBatchedProperty<TContainer>.Get() => Get();

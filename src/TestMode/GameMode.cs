@@ -24,6 +24,7 @@ using SampSharp.GameMode.SAMP;
 using SampSharp.GameMode.SAMP.Commands;
 using SampSharp.GameMode.World;
 using SampSharp.UI;
+using SampSharp.UI.Utilities;
 
 namespace TestMode
 {
