@@ -29,10 +29,32 @@ namespace TestMode
         private Label label2;
         private Panel panel;
         private TextArea textArea;
+        private ProgressBar progressBar;
 
         public TestForm(BasePlayer owner) : base(owner)
         {
-            InitializeComponent();
+            Interactable = true;
+
+            Button b = new Button();
+            b.Size = new Vector2(20, 20);
+            b.Position = new Vector2(50, Screen.Size.Y - 60);
+            Debug.WriteLine("b pos" + b.Position);
+            b.Click += (sender, args) =>
+            {
+                b.Position += new Vector2(0,1);
+                b.Owner.SendClientMessage("pos " + (b.Position.Y - (Screen.Size.Y - 20)));
+            };
+            b.Text = "X";
+            Controls.Add(b);
+
+            for (int i = 0; i < 10; i++)
+            {
+                Panel p = new Panel();
+                p.Size = new Vector2(10);
+                p.Position = new Vector2(i*10);
+                Controls.Add(p);
+            }
+            //InitializeComponent();
         }
 
         private void InitializeComponent()
@@ -80,11 +102,20 @@ namespace TestMode
             textArea.Size = new Vector2(150, 60);
             textArea.Font = TextDrawFont.Normal;
             textArea.Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quamquam id quidem licebit iis existimare, qui legerint.";
-            
+            //
+            // progressBar
+            //
+            progressBar = new ProgressBar();
+            progressBar.Position = new Vector2(30, 0);
+            progressBar.Size = new Vector2(150, 19);
+//            progressBar.Padding = new Padding(5);
+            progressBar.Value = 0.25f;
+
             panel.Controls.Add(label);
             panel.Controls.Add(label2);
 //            panel.Controls.Add(button);
 
+            Controls.Add(progressBar);
             Controls.Add(textArea);
 //            Controls.Add(label);
 //            Controls.Add(button);

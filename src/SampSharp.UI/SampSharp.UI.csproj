@@ -48,6 +48,7 @@
     <Compile Include="ISelectableControl.cs" />
     <Compile Include="ITextControl.cs" />
     <Compile Include="Padding.cs" />
+    <Compile Include="ProgressBar.cs" />
     <Compile Include="Screen.cs" />
     <Compile Include="TextArea.cs" />
     <Compile Include="Utilities\AnchorStylesHelper.cs" />

@@ -64,13 +64,13 @@ namespace SampSharp.UI
             _backColor.Apply();
 
             TextDraw.SuspendLayout();
-            TextDraw.Position = new Vector2(0, 0);
+            TextDraw.Position = new Vector2(4, 4);
             TextDraw.Text = "_";
             TextDraw.Font = TextDrawFont.Normal;
             TextDraw.UseBox = true;
             TextDraw.Proportional = false;
-            TextDraw.LetterSize = new Vector2(1, Size.Y / 10);
-            TextDraw.TextSize = new Vector2(GetAbsolutePosition().X + Size.X - 0, Size.Y - 0);
+            TextDraw.LetterSize = new Vector2(1, (Size.Y - 7) / 10);
+            TextDraw.TextSize = new Vector2(GetAbsolutePosition().X + Size.X - 4, Size.Y - 0);
 
             TextDraw.ResumeLayout();
 

@@ -15,7 +15,6 @@ namespace SampSharp.UI
         {
             Font = TextDrawFont.Normal;
             Proportional = true;
-            Alignment = TextDrawAlignment.Left;
             LetterSize = new Vector2(0.18f, 0.9f);
             Shadow = 1;
             ForeColor = 0xFFFFFFFF;

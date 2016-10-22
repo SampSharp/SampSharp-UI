@@ -81,6 +81,7 @@ namespace SampSharp.UI
                 {
                     _padding = value;
 
+                    OnPaddingChanged();
                     OnPropertyChanged();
                     CheckAbsolutePosition();
                     Invalidate();
@@ -102,6 +103,7 @@ namespace SampSharp.UI
                 {
                     _margin = value;
 
+                    OnMarginChanged();
                     OnPropertyChanged();
                     CheckAbsolutePosition();
                     Invalidate();
@@ -134,6 +136,12 @@ namespace SampSharp.UI
         ///     Gets the parent controls.
         /// </summary>
         public Control Parent { get; private set; }
+
+
+        /// <summary>
+        /// Gets a value indicating whether to ignore the padding of this <see cref="Control"/>.
+        /// </summary>
+        protected virtual bool IgnorePadding { get; }
 
         /// <summary>
         ///     Gets the owner of this instance.
@@ -250,6 +258,16 @@ namespace SampSharp.UI
         ///     Occurs when an owner has been assigned.
         /// </summary>
         public event EventHandler OwnerAssigned;
+
+        /// <summary>
+        ///     Occurs when thee margin has been changed.
+        /// </summary>
+        public event EventHandler MarginChanged;
+
+        /// <summary>
+        ///     Occurs when thee padding has been changed.
+        /// </summary>
+        public event EventHandler PaddingChanged;
 
         /// <summary>
         ///     Occurs when the absolute position of this <see cref="Control" /> changed.
@@ -387,7 +405,7 @@ namespace SampSharp.UI
             var origin = Anchor.GetOrigin();
             var parentPosition = Parent?.GetAbsolutePosition() ?? Vector2.Zero;
             var parentSize = Parent?.Size ?? Screen.Size;
-            var parentPadding = Parent?.Padding ?? new Padding();
+            var parentPadding = Parent == null || Parent.IgnorePadding ? new Padding() : Parent.Padding;
             var parentInnerPostion = parentPosition +
                                      new Vector2(parentPadding.Left, parentPadding.Top) +
                                      new Vector2(Margin.Left, Margin.Top);
@@ -548,6 +566,21 @@ namespace SampSharp.UI
                 Parent?.OnClick(args);
         }
 
+        /// <summary>
+        ///     Raises the <see cref="E:MarginChanged" /> event.
+        /// </summary>
+        protected virtual void OnMarginChanged()
+        {
+            MarginChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        ///     Raises the <see cref="E:PaddingChanged" /> event.
+        /// </summary>
+        protected virtual void OnPaddingChanged()
+        {
+            PaddingChanged?.Invoke(this, EventArgs.Empty);
+        }
         #endregion
     }
 
