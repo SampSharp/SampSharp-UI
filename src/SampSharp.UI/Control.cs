@@ -36,7 +36,9 @@ namespace SampSharp.UI
         private bool _reportedIsVisible;
         private Vector2 _size;
         private bool _visible = true;
-        private AnchorStyles _anchor = AnchorStyles.Left | AnchorStyles.Top; 
+        private AnchorStyles _anchor = AnchorStyles.Left | AnchorStyles.Top;
+        private Padding _padding;
+        private Padding _margin;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
@@ -64,6 +66,48 @@ namespace SampSharp.UI
         #endregion
 
         #region Properties of Control
+
+        /// <summary>
+        ///     Gets or sets the padding of this <see cref="Component"/>
+        /// </summary>
+        public Padding Padding
+        {
+            get { return _padding; }
+            set
+            {
+                AssertNotDisposed();
+
+                if (value != _padding)
+                {
+                    _padding = value;
+
+                    OnPropertyChanged();
+                    CheckAbsolutePosition();
+                    Invalidate();
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Gets or sets the margin of this <see cref="Component"/>
+        /// </summary>
+        public Padding Margin
+        {
+            get { return _margin; }
+            set
+            {
+                AssertNotDisposed();
+
+                if (value != _margin)
+                {
+                    _margin = value;
+
+                    OnPropertyChanged();
+                    CheckAbsolutePosition();
+                    Invalidate();
+                }
+            }
+        }
 
         /// <summary>
         ///     Gets or sets the anchor style of this <see cref="Component"/>
@@ -340,12 +384,31 @@ namespace SampSharp.UI
         /// </summary>
         public virtual Vector2 GetAbsolutePosition()
         {
+            var origin = Anchor.GetOrigin();
             var parentPosition = Parent?.GetAbsolutePosition() ?? Vector2.Zero;
-            var parentAnchor = (Parent?.Size ?? Screen.Size)*Anchor.GetOrigin();
-            var position = Position;
-            var anchor = Size*Anchor.GetOrigin();
+            var parentSize = Parent?.Size ?? Screen.Size;
+            var parentPadding = Parent?.Padding ?? new Padding();
+            var parentInnerPostion = parentPosition +
+                                     new Vector2(parentPadding.Left, parentPadding.Top) +
+                                     new Vector2(Margin.Left, Margin.Top);
+            var parentInnerSize = parentSize - parentPadding.Size - Margin.Size;
+            var parentInnerAnchor = parentInnerSize* origin;
+            var anchor = Size*origin;
 
-            return parentPosition + parentAnchor + position - anchor;
+            return parentInnerPostion + parentInnerAnchor + Position - anchor;
+
+//            var parentPadding = Parent?.Padding ?? new Padding();
+//            var parentPosition = (Parent?.GetAbsolutePosition() ??
+//                                 Vector2.Zero) + new Vector2(parentPadding.Left, parentPadding.Top);
+//
+//            var parentAnchor = ((Parent?.Size - parentPadding.Size) ?? Screen.Size)*Anchor.GetOrigin();
+//            var position = Position;
+//
+//            var margin = Margin;
+//
+//            var anchor = Size*Anchor.GetOrigin();
+//
+//            return parentPosition + parentAnchor + position - anchor;
         }
 
         #endregion
