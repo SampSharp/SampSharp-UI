@@ -396,19 +396,6 @@ namespace SampSharp.UI
             var anchor = Size*origin;
 
             return parentInnerPostion + parentInnerAnchor + Position - anchor;
-
-//            var parentPadding = Parent?.Padding ?? new Padding();
-//            var parentPosition = (Parent?.GetAbsolutePosition() ??
-//                                 Vector2.Zero) + new Vector2(parentPadding.Left, parentPadding.Top);
-//
-//            var parentAnchor = ((Parent?.Size - parentPadding.Size) ?? Screen.Size)*Anchor.GetOrigin();
-//            var position = Position;
-//
-//            var margin = Margin;
-//
-//            var anchor = Size*Anchor.GetOrigin();
-//
-//            return parentPosition + parentAnchor + position - anchor;
         }
 
         #endregion

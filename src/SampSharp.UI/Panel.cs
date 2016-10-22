@@ -23,7 +23,7 @@ namespace SampSharp.UI
     public class Panel : ContainerControl
     {
         private readonly BatchedProperty<TextDrawControl, Color> _backColor =
-            new BatchedProperty<TextDrawControl, Color>((t, v) => t.BackColor = v);
+            new BatchedProperty<TextDrawControl, Color>((t, v) => t.BoxColor = v);
 
         public Panel()
         {
@@ -42,7 +42,7 @@ namespace SampSharp.UI
 
         public TextDrawControl TextDraw { get; private set; }
 
-        public virtual Color BackColor
+        public virtual Color BoxColor
         {
             get { return _backColor.Get(); }
             set

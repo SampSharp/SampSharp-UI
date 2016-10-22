@@ -36,7 +36,6 @@ namespace SampSharp.UI
         {
             Shadow = 0;
             LetterSize = new Vector2(0.18f, 0.9f);
-            BackColor = 0x00000001;
 
             _label = new Label();
 

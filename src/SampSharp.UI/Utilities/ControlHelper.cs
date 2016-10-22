@@ -367,12 +367,15 @@ namespace SampSharp.UI.Utilities
             if (value == null) throw new ArgumentNullException(nameof(value));
 
             var len = 1;
+            var lastSpace = 1;
             while (value.Length > len)
             {
                 var cur = GetTextWidth(value.Substring(0, len + 1), font, letterSize.X, proportional);
-                if (cur > width)
-                    return len;
+                if (cur > width && value[len] != ' ')
+                    return len*0.75f < lastSpace ? lastSpace + 1 : len;
 
+                if (value[len] == ' ')
+                    lastSpace = len;
                 len++;
             }
 
@@ -433,8 +436,6 @@ namespace SampSharp.UI.Utilities
                 foreach (var c in sanitizedLine)
                 {
                     int value;
-//                    if (c == ' ')
-//                        value = fnt.ReplacementSpaceChar;
                     if (!proportional || !fnt.Charset.TryGetValue(c, out value))
                         value = fnt.Unprop;
                     lnSz += value*letterWidth;
