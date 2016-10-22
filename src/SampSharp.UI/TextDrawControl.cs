@@ -29,7 +29,6 @@ namespace SampSharp.UI
         private readonly BatchedPropertyCollection<PlayerTextDraw> _properties = new BatchedPropertyCollection<PlayerTextDraw>
         {
             // TODO some  default values are incorrect, need to find correct values
-            ["Alignment"] = new BatchedProperty<PlayerTextDraw,TextDrawAlignment>((t, v) => t.Alignment = v, TextDrawAlignment.Left),
             ["BackColor"] = new BatchedProperty<PlayerTextDraw,Color>((t, v) => t.BackColor = v,  Color.Black),// TODO
             ["BoxColor"] = new BatchedProperty<PlayerTextDraw,Color>((t, v) => t.BoxColor = v, Color.Black),// TODO
             ["Font"] = new BatchedProperty<PlayerTextDraw,TextDrawFont>((t, v) => t.Font = v, TextDrawFont.Normal),
@@ -88,21 +87,7 @@ namespace SampSharp.UI
         }
 
         #region Properties of TextDrawControl
-
-        public TextDrawAlignment Alignment
-        {
-            get { return _properties.Get<TextDrawAlignment>(); }
-            set
-            {
-                if (_properties.Set(value))
-                {
-                    OnPropertyChanged();
-                    CheckSize();
-                    Invalidate();
-                }
-            }
-        }
-
+        
         public Color BackColor
         {
             get { return _properties.Get<Color>(); }
