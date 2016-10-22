@@ -58,7 +58,7 @@ namespace SampSharp.UI
         
         private void CheckSize()
         {
-            var size = ControlUtils.GetTextSize(Text, Font, LetterSize, Proportional); // + ?
+            var size = ControlHelper.GetTextSize(Text, Font, LetterSize, Proportional); // + ?
             // TODO better calculation
             // TODO override Size
 

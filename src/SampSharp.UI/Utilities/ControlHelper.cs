@@ -15,20 +15,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using SampSharp.GameMode;
 using SampSharp.GameMode.Definitions;
 
 namespace SampSharp.UI.Utilities
 {
-    internal static class ControlUtils
+    internal static class ControlHelper
     {
-        private struct Font
-        {
-            public Dictionary<char, int> Charset;
-            public int Unprop;
-            public int ReplacementSpaceChar;
-        }
         #region Fonts
 
         private static readonly Dictionary<TextDrawFont, Font> CharacterWidths = new Dictionary
@@ -242,7 +235,7 @@ namespace SampSharp.UI.Utilities
 //                        { 'Û', 26 },
 //                        { 'Ü', 26 },
 //                        { 'ß', 21 },
-                                { 'Ñ', 25 },
+                                { 'Ñ', 25 }
                             }
                     }
                 },
@@ -340,13 +333,13 @@ namespace SampSharp.UI.Utilities
                                 { 'w', 27 },
                                 { 'x', 20 },
                                 { 'y', 20 },
-                                { 'z', 17 },
+                                { 'z', 17 }
                             }
                     }
                 }
             };
 
-#endregion
+        #endregion
 
         public static string SanitizeText(string text)
         {
@@ -368,7 +361,8 @@ namespace SampSharp.UI.Utilities
             return text;
         }
 
-        private static int GetStringWithMaxWidth(string value, TextDrawFont font, Vector2 letterSize, bool proportional, float width)
+        private static int GetStringWithMaxWidth(string value, TextDrawFont font, Vector2 letterSize, bool proportional,
+            float width)
         {
             if (value == null) throw new ArgumentNullException(nameof(value));
 
@@ -384,37 +378,31 @@ namespace SampSharp.UI.Utilities
 
             return value.Length;
         }
-        
+
         public static string FitTextInWidth(string value, TextDrawFont font, Vector2 letterSize, bool proportional,
             float maxWidth)
         {
             if (string.IsNullOrWhiteSpace(value))
                 return value;
-            if (letterSize.X <= 0 && proportional)
-            {
+            if ((letterSize.X <= 0) && proportional)
                 return value;
-            }
 
             var lines = new List<string>();
-            
+
             foreach (var ln in value.Replace("~n~", "\n").Split('\n'))
             {
                 var line = ln;
                 if (string.IsNullOrWhiteSpace(line))
-                {
                     lines.Add(string.Empty);
-                }
                 else
-                {
                     while (!string.IsNullOrWhiteSpace(line))
                     {
                         var len = GetStringWithMaxWidth(line, font, letterSize, proportional, maxWidth);
-                        
+
                         lines.Add(line.Substring(0, len));
 
                         line = line.Length > len ? line.Substring(len) : null;
                     }
-                }
             }
 
             return string.Join("\n", lines);
@@ -447,7 +435,7 @@ namespace SampSharp.UI.Utilities
                     int value;
 //                    if (c == ' ')
 //                        value = fnt.ReplacementSpaceChar;
-                     if (!proportional || !fnt.Charset.TryGetValue(c, out value))
+                    if (!proportional || !fnt.Charset.TryGetValue(c, out value))
                         value = fnt.Unprop;
                     lnSz += value*letterWidth;
                 }
@@ -461,6 +449,13 @@ namespace SampSharp.UI.Utilities
         public static float GetTextHeight(float letterHeight)
         {
             return letterHeight*12.0f;
+        }
+
+        private struct Font
+        {
+            public Dictionary<char, int> Charset;
+            public int Unprop;
+            public int ReplacementSpaceChar;
         }
     }
 }

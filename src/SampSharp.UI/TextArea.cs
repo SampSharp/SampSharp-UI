@@ -164,7 +164,7 @@ namespace SampSharp.UI
 
         private string MakeFitting(string value)
         {
-            return ControlUtils.FitTextInWidth(value, Font, LetterSize, Proportional, Size.X);
+            return ControlHelper.FitTextInWidth(value, Font, LetterSize, Proportional, Size.X);
         }
 
         private void CheckTextSize()

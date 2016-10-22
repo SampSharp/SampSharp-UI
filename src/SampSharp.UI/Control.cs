@@ -19,6 +19,7 @@ using System.Runtime.CompilerServices;
 using SampSharp.GameMode;
 using SampSharp.GameMode.Tools;
 using SampSharp.GameMode.World;
+using SampSharp.UI.Utilities;
 
 namespace SampSharp.UI
 {
@@ -35,6 +36,7 @@ namespace SampSharp.UI
         private bool _reportedIsVisible;
         private Vector2 _size;
         private bool _visible = true;
+        private AnchorStyles _anchor = AnchorStyles.Left | AnchorStyles.Top; 
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
@@ -62,6 +64,27 @@ namespace SampSharp.UI
         #endregion
 
         #region Properties of Control
+
+        /// <summary>
+        ///     Gets or sets the anchor style of this <see cref="Component"/>
+        /// </summary>
+        public AnchorStyles Anchor
+        {
+            get { return _anchor; }
+            set
+            {
+                AssertNotDisposed();
+
+                if (value != _anchor)
+                {
+                    _anchor = value;
+                    
+                    OnPropertyChanged();
+                    CheckAbsolutePosition();
+                    Invalidate();
+                }
+            }
+        }
 
         /// <summary>
         ///     Gets the parent controls.
@@ -116,6 +139,7 @@ namespace SampSharp.UI
 
                     OnSizeChanged();
                     OnPropertyChanged();
+                    CheckAbsolutePosition();
                     Invalidate();
                 }
             }
@@ -317,8 +341,11 @@ namespace SampSharp.UI
         public virtual Vector2 GetAbsolutePosition()
         {
             var parentPosition = Parent?.GetAbsolutePosition() ?? Vector2.Zero;
+            var parentAnchor = (Parent?.Size ?? Screen.Size)*Anchor.GetOrigin();
+            var position = Position;
+            var anchor = Size*Anchor.GetOrigin();
 
-            return parentPosition + Position;
+            return parentPosition + parentAnchor + position - anchor;
         }
 
         #endregion
